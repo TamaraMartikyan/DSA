@@ -1,0 +1,72 @@
+#include <iostream>
+using namespace std;
+
+
+class Singleton {
+public:
+    // Static instance created eagerly
+    static Singleton& getInstance() {
+        return instance;
+    }
+
+    void showMessage() const {
+        cout << "Hello, Singleton instance here!" << endl;
+    }
+
+
+    Singleton(const Singleton&) = delete;
+    Singleton& operator=(const Singleton&) = delete;
+
+private:
+    Singleton() {
+        cout << "Singleton created." << endl;
+    }
+
+    static Singleton instance;
+
+
+    Singleton Singleton::instance;
+};
+
+int main() {
+    Singleton::getInstance().showMessage();
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+#include <iostream>
+#include <mutex>
+
+class Singleton {
+public:
+    // Static method to access the single instance
+    static Singleton& getInstance() {
+        static Singleton instance;  
+        return instance;
+    }
+
+    void showMessage() const {
+        std::cout << "Hello, Singleton instance here!" << std::endl;
+    }
+
+    Singleton(const Singleton&) = delete;
+    Singleton& operator=(const Singleton&) = delete;
+
+private:
+    Singleton() {
+        std::cout << "Singleton created." << std::endl;
+    }
+};
+
+int main() {
+    // The Singleton instance is created only here, when first accessed
+    Singleton::getInstance().showMessage();
+    return 0;
+}

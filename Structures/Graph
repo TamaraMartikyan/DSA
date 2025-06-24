@@ -1,0 +1,102 @@
+//adj_list
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+class Graph {
+private:
+    int V;  
+    vector<vector<int>> adjList;  // Adjacency list
+
+public:
+    Graph(int vertices) {
+        V = vertices;
+        adjList.resize(V);  
+    }
+
+    void addEdge(int u, int v, bool directed = false) {
+        adjList[u].push_back(v);
+        if (!directed) {
+            adjList[v].push_back(u); 
+        }
+    }
+
+    void printGraph() {
+        for (int i = 0; i < V; ++i) {
+            cout << "Vertex " << i << ": ";
+            for (int neighbor : adjList[i]) {
+                cout << neighbor << " ";
+            }
+            cout << endl;
+        }
+    }
+};
+
+int main() {
+    Graph g(5);  
+    g.addEdge(0, 1);
+    g.addEdge(0, 4);
+    g.addEdge(1, 2);
+    g.addEdge(1, 3);
+    g.addEdge(1, 4);
+    g.addEdge(2, 3);
+    g.addEdge(3, 4);
+
+    g.printGraph();
+
+    return 0;
+}
+
+
+
+//adj_matrix
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+class Graph {
+private:
+    int V;  
+    vector<vector<int>> adjMatrix;  
+
+public:
+    Graph(int vertices) {
+        V = vertices;
+        adjMatrix.resize(V, vector<int>(V, 0));  
+    }
+
+    void addEdge(int u, int v, bool directed = false) {
+        adjMatrix[u][v] = 1;
+        if (!directed) {
+            adjMatrix[v][u] = 1;  
+        }
+    }
+
+    void printGraph() {
+        cout << "Adjacency Matrix:\n";
+        for (int i = 0; i < V; ++i) {
+            for (int j = 0; j < V; ++j) {
+                cout << adjMatrix[i][j] << " ";
+            }
+            cout << endl;
+        }
+    }
+};
+
+int main() {
+    Graph g(5); 
+
+    g.addEdge(0, 1);
+    g.addEdge(0, 4);
+    g.addEdge(1, 2);
+    g.addEdge(1, 3);
+    g.addEdge(1, 4);
+    g.addEdge(2, 3);
+    g.addEdge(3, 4);
+
+    g.printGraph();
+
+    return 0;
+}

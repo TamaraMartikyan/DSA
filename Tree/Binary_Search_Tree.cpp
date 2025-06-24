@@ -69,16 +69,6 @@ private:
     }
 
 
-    //void printTree(Node* node, string prefix = "", bool isLeft = true) {
-    //    if (node != nullptr) {
-    //        cout << prefix;
-    //        cout << (isLeft ? "|-- " : "\\-- ");
-    //        cout << node->data << endl;
-    //        printTree(node->left, prefix + (isLeft ? "|   " : "    "), true);
-    //        printTree(node->right, prefix + (isLeft ? "|   " : "    "), false);
-    //    }
-    //}
-
 public:
 
     BinarySearchTree() {
@@ -95,9 +85,6 @@ public:
         return search(root, value);
     }
 
-
-  
-
     int findMin() {
         if (root == nullptr) {
             throw runtime_error("Tree is empty");
@@ -113,15 +100,6 @@ public:
         return findMax(root);
     }
 
-
-    /* void printTree() {
-         if (root == nullptr) {
-             cout << "Tree is empty" << endl;
-         }
-         else {
-             printTree(root);
-         }
-     }*/
  };
 
 
@@ -139,7 +117,7 @@ public:
     
 
         cout << "Tree structure:" << endl;
-        /*bst.printTree();*/
+      
 
         try {
             cout << "Minimum value in the BST: " << bst.findMin() << endl;

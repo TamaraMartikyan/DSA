@@ -111,8 +111,7 @@ bool isPerfect(Node* root) {
     while (!q.empty()) {
         int size = q.size();
 
-        // If number of expected nodes is 
-        // not same, return false.
+        // If number of expected nodes is not same, return false.
         if (size != nodeCnt) return false;
 
         while (size--) {

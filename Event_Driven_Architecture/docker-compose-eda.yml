@@ -1,0 +1,72 @@
+version: '3.9'
+
+services:
+
+  # ----------------------
+  # REDPANDA (Kafka Broker)
+  # ----------------------
+  redpanda:
+    image: redpandadata/redpanda:latest
+    container_name: redpanda
+    ports:
+      - "9092:9092"   # Kafka broker
+      - "8081:8081"   # Admin API
+      - "8082:8082"   # REST proxy
+    environment:
+      REDPANDA_ADVERTISED_KAFKA_API_ADDRESSES: "172.23.201.90:9092"
+    command:
+      - redpanda
+      - start
+      - --smp=2
+      - --memory=2G
+      - --overprovisioned
+
+  # ----------------------
+  # REDPANDA CONSOLE (UI)
+  # ----------------------
+  redpanda-console:
+    image: redpandadata/console:latest
+    container_name: redpanda-console
+    ports:
+      - "8080:8080"
+    environment:
+      KAFKA_BROKERS: redpanda:9092
+    depends_on:
+      - redpanda
+
+  # ----------------------
+  # RABBITMQ BROKER + MANAGEMENT UI
+  # ----------------------
+  rabbitmq:
+    image: rabbitmq:3.12-management-alpine
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"       # broker
+      - "15672:15672"     # management UI
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+
+  # ----------------------
+  # KAFDROP (optional Kafka UI)
+  # ----------------------
+  kafdrop:
+    image: obsidiandynamics/kafdrop
+    container_name: kafdrop
+    depends_on:
+      - redpanda
+    ports:
+      - "9000:9000"
+    environment:
+      KAFKA_BROKERCONNECT: "172.23.201.90:9092"
+      JVM_OPTS: "-Xms32M -Xmx64M"
+
+  # ----------------------
+  # REDIS (optional)
+  # ----------------------
+  redis:
+    image: redis:7-alpine
+    container_name: redis
+    ports:
+      - "6379:6379"
+

@@ -1,0 +1,1 @@
+. "/home/tamara/eda-system/conanrunenv-release-x86_64.sh"
